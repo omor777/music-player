@@ -1,0 +1,14 @@
+.btn-shadow {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+#music-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #2dd4bf;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+}

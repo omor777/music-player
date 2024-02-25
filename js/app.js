@@ -1,19 +1,19 @@
 const musics = [
   {
-    name: "unhealthy",
-    description: "Anne-Marie, Shania Twain",
+    name: "Hindi Song",
+    description: "T-series album",
     img: "../images/img1.png",
     song: "../audio/song1.mp3",
   },
   {
-    name: "old town road",
-    description: "lil nas x, billy cyrus",
+    name: "Work from Home",
+    description: "Mixes are playlists Youtube makes for you",
     img: "../images/img2.jpg",
     song: "../audio/song2.mp3",
   },
   {
-    name: "break my heart",
-    description: "dua lipa",
+    name: "worth it",
+    description: "fifth harmony, kid ink",
     img: "../images/img3.jpg",
     song: "../audio/song3.mp3",
   },
@@ -24,8 +24,8 @@ const musics = [
     song: "../audio/song4.mp3",
   },
   {
-    name: "worth it",
-    description: "fifth harmony, kid ink",
+    name: "Just Gonna Say",
+    description: " Love The Way You Lie ft.",
     img: "../images/img5.jpg",
     song: "../audio/song5.mp3",
   },
@@ -90,6 +90,8 @@ function main() {
     } else {
       audio.pause();
     }
+
+    loadSongData();
   });
 
   prevSong.addEventListener("click", function (e) {
@@ -108,6 +110,7 @@ function main() {
     } else {
       audio.pause();
     }
+    loadSongData();
   });
 
   function musicDurationChange(e) {
@@ -142,8 +145,12 @@ function main() {
 
   //handle music end event
   audio.addEventListener("ended", () => {
-    showElementById("play");
-    hideElementById("pause");
+    currentIndex = (currentIndex + 1) % musics.length;
+    const nextSong = musics[currentIndex].song;
+    audio.src = nextSong;
+    audio.load();
+    audio.play();
+    loadSongData();
   });
 
   // handle arrowRight and arrowLeft key
@@ -159,3 +166,4 @@ function main() {
     }
   });
 }
+

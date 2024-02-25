@@ -40,18 +40,24 @@
         </div>
         <figure>
           <img
+            id="img"
             class="rounded-full size-48 mx-auto border-[0.375rem] border-white object-cover btn-shadow"
             src="./images/music.jpg"
           />
         </figure>
         <h1
+          id="title"
           class="text-center capitalize text-2xl font-medium mt-5 text-black/80"
         >
           Despacito
         </h1>
-        <p class="text-center mt-1 text-black/70 capitalize">
+        <p id="desc" class="text-center mt-1 text-black/70 capitalize">
           Track Luis Fonsi Ft. Puerto Rican
         </p>
+
+        <audio class="hidden" id="song" controls>
+          <source type="audio/mp3" />
+        </audio>
 
         <div class="flex items-center justify-center gap-3 mt-10">
           <p class="text-black">
@@ -73,7 +79,10 @@
 
         <!-- controls -->
         <div class="flex items-center justify-center gap-5 mt-6 mb-2">
-          <button class="size-12 bg-white rounded-full btn-shadow outline-none">
+          <button
+            id="prev"
+            class="size-12 bg-white rounded-full btn-shadow outline-none"
+          >
             <i class="fa-solid fa-backward text-teal-400 mr-1"></i>
           </button>
           <button
@@ -83,7 +92,10 @@
             <i id="play" class="fa-solid fa-play text-xl"></i>
             <i id="pause" class="fa-solid fa-pause text-xl hidden"></i>
           </button>
-          <button class="size-12 bg-white rounded-full btn-shadow outline-none">
+          <button
+            id="next"
+            class="size-12 bg-white rounded-full btn-shadow outline-none"
+          >
             <i class="fa-solid fa-forward text-teal-400 ml-1"></i>
           </button>
         </div>

@@ -2,8 +2,8 @@ const musics = [
   {
     name: "unhealthy",
     description: "Anne-Marie, Shania Twain",
-    img: "../images/img1.jpg",
-    song: "../audio/song.mp3",
+    img: "../images/img1.png",
+    song: "../audio/song1.mp3",
   },
   {
     name: "old town road",
@@ -29,43 +29,31 @@ const musics = [
     img: "../images/img5.jpg",
     song: "../audio/song5.mp3",
   },
-  {
-    name: "work from home",
-    description: "fifth harmony, ty dolla $sing",
-    img: "../images/img6.jpg",
-    song: "../audio/song6.mp3",
-  },
-  // {
-  //   name: "unhealthy",
-  //   description: "Anne-Marie, Shania Twain",
-  //   img: "../images/img1.jpg",
-  // },
-  // {
-  //   name: "unhealthy",
-  //   description: "Anne-Marie, Shania Twain",
-  //   img: "../images/img1.jpg",
-  // },
-  // {
-  //   name: "unhealthy",
-  //   description: "Anne-Marie, Shania Twain",
-  //   img: "../images/img1.jpg",
-  // },
 ];
 
 window.onload = () => {
   main();
 };
+
 //global
-const audio = new Audio("../audio/song.mp3");
-const id = (id) => document.getElementById(id);
+let currentIndex = 0;
 
 function main() {
+  const id = (id) => document.getElementById(id);
   const playBtn = id("play-btn");
   const musicProgress = id("music-progress");
   const startSecond = id("start-second");
   const startMin = id("start-min");
   const endSecond = id("end-second");
   const endMin = id("end-min");
+  const nextSong = id("next");
+  const prevSong = id("prev");
+  const img = id("img");
+  const title = id("title");
+  const desc = id("desc");
+  const audio = id("song");
+
+  audio.src = musics[currentIndex].song;
 
   function playMusic(e) {
     if (audio.paused) {
@@ -78,10 +66,49 @@ function main() {
       hideElementById("pause");
     }
   }
+
+  //load img title desc
+  function loadSongData() {
+    img.src = musics[currentIndex].img;
+    title.innerText = musics[currentIndex].name;
+    desc.innerText = musics[currentIndex].description;
+  }
+  loadSongData();
+
   playBtn.addEventListener("click", playMusic);
 
-  // change music range value
-  musicProgress.max = Math.round(audio.duration);
+  nextSong.addEventListener("click", function () {
+    currentIndex = (currentIndex + 1) % musics.length;
+    let nextSong = musics[currentIndex].song;
+    audio.src = nextSong;
+    audio.load();
+
+    // check audio play or not
+    let pauseState = playBtn.firstElementChild.classList.contains("hidden");
+    if (pauseState) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  });
+
+  prevSong.addEventListener("click", function (e) {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = musics.length - 1;
+    }
+    let prevSong = musics[currentIndex].song;
+    audio.src = prevSong;
+    audio.load();
+
+    // check audio play or not
+    let pauseState = playBtn.firstElementChild.classList.contains("hidden");
+    if (pauseState) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  });
 
   function musicDurationChange(e) {
     musicProgress.value = audio.currentTime;
@@ -99,12 +126,13 @@ function main() {
     audio.currentTime = e.target.value;
   });
 
-  function updateMusicEndTime() {
+  function updateMusicEndTime(e) {
     const timeObj = convertSecToMin(Math.round(audio.duration));
     endMin.innerText = timeObj.min.toString().padStart(2, 0);
     endSecond.innerText = timeObj.leftSec.toString().padStart(2, 0);
+    musicProgress.max = Math.round(audio.duration);
   }
-  updateMusicEndTime();
+  audio.onloadedmetadata = updateMusicEndTime;
 
   function convertSecToMin(sec) {
     let min = Math.floor(sec / 60);
